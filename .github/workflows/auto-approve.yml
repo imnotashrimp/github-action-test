@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install Node.js
         uses: actions/setup-node@v2
@@ -19,25 +21,22 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install ignore @octokit/rest
+        run: npm install
 
-      - name: Get list of changed files
-        id: file_changes
-        uses: trilom/file-changes-action@v1.2.4
+      - name: Get changed files that aren't pre-approved
+        id: changed-files
+        uses: tj-actions/changed-files@v36
         with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          output: ' '
+          # The following is a list of blobs that will be automatically approved.
+          files_ignore: |
+            approved/**
 
-      - name: Write changed files to file
-        run: echo "${{ steps.file_changes.outputs.files }}" > files-changed.txt
-
-      - name: Read .auto-approve
-        run: node ./.github/scripts/readAutoApproveList.js
-
-      - name: Write PR info to file
-        run: echo '${{ toJSON(github) }}' > pr-info.json
-
-      - name: Auto approve or dismiss
-        run: node ./.github/scripts/processChanges.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Approve PR
+        id: approve
+        if: steps.changed-files.outputs.all_changed_and_modified_files == ''
+        uses: hmarr/auto-approve-action@v2.0.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+    
+      # - name: Display changed files
+      #   run: echo "${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
