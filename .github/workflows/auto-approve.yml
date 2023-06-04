@@ -24,10 +24,10 @@ jobs:
         with:
             files: !approved/**
       
-      - name: Auto approve
-        run: |
-          echo "The following files have changed:"
-          echo "${{ steps.changed_files.outputs.files }}"
+      # - name: Auto approve
+      #   run: |
+      #     echo "The following files have changed:"
+      #     echo "${{ steps.changed_files.outputs.files }}"
           
       # - name: Install dependencies
       #   run: npm install ignore @octokit/rest
