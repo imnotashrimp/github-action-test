@@ -1,0 +1,3 @@
+# Add each path you want to auto-approve.
+# Uses glob patterns.
+./approved/**
