@@ -30,7 +30,7 @@ jobs:
         id: list_changed_files
         run: |
           echo "The following files have changed since last merge:"
-          echo "${{ steps.changed_files.outputs.files }}"
+          echo "${{ steps.changed_files.outputs }}"
       
       # - name: Auto approve
       #   run: |
