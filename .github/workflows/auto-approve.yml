@@ -1,0 +1,43 @@
+name: Auto Approve Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install ignore @octokit/rest
+
+      - name: Get list of changed files
+        id: file_changes
+        uses: trilom/file-changes-action@v1.2.4
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          output: ' '
+
+      - name: Write changed files to file
+        run: echo "${{ steps.file_changes.outputs.files }}" > files-changed.txt
+
+      - name: Read .auto-approve
+        run: node ./.github/scripts/readAutoApproveList.js
+
+      - name: Write PR info to file
+        run: echo '${{ toJSON(github) }}' > pr-info.json
+
+      - name: Auto approve or dismiss
+        run: node ./.github/scripts/processChanges.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

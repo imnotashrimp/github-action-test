@@ -1,0 +1,22 @@
+{
+  "name": "github-action-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imnotashrimp/github-action-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imnotashrimp/github-action-test/issues"
+  },
+  "homepage": "https://github.com/imnotashrimp/github-action-test#readme",
+  "dependencies": {
+    "ignore": "^5.2.4"
+  }
+}
