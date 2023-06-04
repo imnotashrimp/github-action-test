@@ -20,43 +20,12 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Check for changed files *not* in the pre-approved list
-        id: changed_files
+      - name: Install dependencies
+        run: npm install
+
+      - name: Get changed files
+        id: changed-files
         uses: tj-actions/changed-files@v36
-        with:
-          files: approved/**
 
-      - name: List changed files
-        id: list_changed_files
-        run: |
-          echo "The following files have changed since last merge:"
-          echo "${{ steps.changed_files.outputs }}"
-      
-      # - name: Auto approve
-      #   run: |
-      #     echo "The following files have changed:"
-      #     echo "${{ steps.changed_files.outputs.files }}"
-          
-      # - name: Install dependencies
-      #   run: npm install ignore @octokit/rest
-
-      # - name: Get list of changed files
-      #   id: file_changes
-      #   uses: trilom/file-changes-action@v1.2.4
-      #   with:
-      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
-      #     output: ' '
-
-      # - name: Write changed files to file
-      #   run: echo "${{ steps.file_changes.outputs.files }}" > files-changed.txt
-
-      # - name: Read .auto-approve
-      #   run: node ./.github/scripts/readAutoApproveList.js
-
-      # - name: Write PR info to file
-      #   run: echo '${{ toJSON(github) }}' > pr-info.json
-
-      # - name: Auto approve or dismiss
-      #   run: node ./.github/scripts/processChanges.js
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Display changed files
+        run: echo "${{ steps.changed-files.outputs.all }}"
