@@ -28,4 +28,4 @@ jobs:
         uses: tj-actions/changed-files@v36
 
       - name: Display changed files
-        run: echo "${{ steps.changed-files.outputs.all }}"
+        run: echo "${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
