@@ -10,27 +10,27 @@ jobs:
   auto-approve:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout PR
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+      # - name: Checkout PR
+      #   uses: actions/checkout@v3
+      #   with:
+      #     fetch-depth: 0
+      #     ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+      # - name: Install Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '14'
 
-      - name: Install dependencies
-        run: npm install
+      # - name: Install dependencies
+      #   run: npm install
 
-      - name: Get changed files that aren't pre-approved
-        id: changed-files
-        uses: tj-actions/changed-files@v36
-        with:
-          # The following is a list of blobs that will be automatically approved.
-          files_ignore: |
-            approved/**
+      # - name: Get changed files that aren't pre-approved
+      #   id: changed-files
+      #   uses: tj-actions/changed-files@v36
+      #   with:
+      #     # The following is a list of blobs that will be automatically approved.
+      #     files_ignore: |
+      #       approved/**
 
       - name: Checkout base branch
         uses: actions/checkout@v3
