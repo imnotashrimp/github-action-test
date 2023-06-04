@@ -34,11 +34,6 @@ jobs:
           files_ignore: |
             approved/**
 
-      - name: Checkout base branch
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      
       - name: Approve PR
         id: approve
         if: steps.changed-files.outputs.all_changed_and_modified_files == ''
