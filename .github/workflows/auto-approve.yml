@@ -34,7 +34,7 @@ jobs:
       - name: Approve PR
         id: approve
         if: steps.changed-files.outputs.all_changed_and_modified_files == ''
-        uses: hmarr/auto-approve-action@v2.0.0
+        uses: hmarr/auto-approve-action@v3
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
     
