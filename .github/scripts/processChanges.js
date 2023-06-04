@@ -1,5 +1,7 @@
 const fs = require('fs');
 const { Octokit } = require("@octokit/rest");
+const ignore = require('ignore');
+
 const githubToken = process.env.GITHUB_TOKEN;
 
 const octokit = new Octokit({ auth: githubToken });
