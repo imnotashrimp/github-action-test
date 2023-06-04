@@ -9,6 +9,8 @@ on:
 jobs:
   auto-approve:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       # - name: Checkout PR
       #   uses: actions/checkout@v3
