@@ -39,7 +39,7 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
           script: |
-            const botName = "bot-login-name"; // replace with your bot's login name
+            const botName = "github-actions[bot]";
             const reviews = await github.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
