@@ -33,15 +33,27 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install @actions/github
-
       - name: Dismiss review
-        run: node .github/scripts/dismiss-review.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v6
+        if: steps.changed-files.outputs.all_changed_and_modified_files != ''
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            const botName = "bot-login-name"; // replace with your bot's login name
+            const reviews = await github.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const botReview = reviews.data.find(review => review.user.login === botName);
+
+            if(botReview) {
+              await github.pulls.dismissReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                review_id: botReview.id,
+                message: 'Dismissing bot review'
+              });
+            }
