@@ -32,6 +32,16 @@ jobs:
         uses: hmarr/auto-approve-action@v3
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-    
-      # - name: Display changed files
-      #   run: echo "${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install @actions/github
+
+      - name: Dismiss review
+        run: node .github/scripts/dismiss-review.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
